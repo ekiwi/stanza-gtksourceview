@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+ This file is part of GtkSourceView
+
+ Authors: Kevin Läufer
+ Copyright (C) 2016 Kevin Läufer <laeufer@berkeley.edu>
+
+ GtkSourceView is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ GtkSourceView is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+-->
+
+<language id="stanza" _name="L.B. Stanza" version="2.0" _section="Source">
+  <metadata>
+    <property name="globs">*.stanza</property>
+    <property name="line-comment-start">;</property>
+  </metadata>
+
+  <styles>
+    <style id="keyword" _name="Keyword" map-to="def:keyword"/>
+    <style id="boolean" _name="Boolean value" map-to="def:boolean"/>
+    <style id="string" _name="String" map-to="def:string"/>
+    <style id="comment" _name="Comment" map-to="def:comment"/>
+    <style id="type" _name="Data Type" map-to="def:type"/>
+    <style id="decimal" _name="Decimal Number" map-to="def:decimal"/>
+  </styles>
+
+  <definitions>
+
+    <context id="keywords" style-ref="keyword">
+      <!-- control flow -->
+      <keyword>if</keyword>
+      <keyword>else</keyword>
+      <keyword>switch</keyword>
+      <keyword>case</keyword>
+      <keyword>match</keyword>
+      <keyword>when</keyword>
+      <!-- loops -->
+      <keyword>for</keyword>
+      <keyword>do</keyword>
+      <keyword>while</keyword>
+      <!-- range expressions -->
+      <keyword>to</keyword>
+      <keyword>through</keyword>
+      <keyword>by</keyword>
+      <!-- boolean operators -->
+      <keyword>and</keyword>
+      <keyword>or</keyword>
+      <keyword>not</keyword>
+      <!-- functions -->
+      <keyword>defn</keyword>
+      <keyword>defmulti</keyword>
+      <keyword>defmethod</keyword>
+      <!-- variables -->
+      <keyword>val</keyword>
+      <keyword>var</keyword>
+      <!-- objects -->
+      <keyword>is</keyword>
+      <keyword>new</keyword>
+      <keyword>deftype</keyword>
+      <keyword>defstruct</keyword>
+      <!-- exceptions -->
+      <keyword>throw</keyword>
+      <keyword>try</keyword>
+      <keyword>catch</keyword>
+      <!-- parser generator -->
+      <keyword>defsyntax</keyword>
+      <keyword>defproduction</keyword>
+      <keyword>defrule</keyword>
+      <!-- misc -->
+      <keyword>public</keyword>
+      <keyword>_</keyword>
+    </context>
+
+
+    <context id="boolean" style-ref="boolean">
+      <keyword>true</keyword>
+      <keyword>false</keyword>
+    </context>
+
+    <context id="string" style-ref="string" class="string" class-disabled="no-spell-check">
+      <start>"</start>
+      <end>"</end>
+      <include>
+        <!--<context ref="string-escape"/>-->
+        <context ref="def:line-continue"/>
+      </include>
+    </context>
+
+    <context id="comment" style-ref="comment">
+      <start>;</start>
+      <end>$</end>
+    </context>
+
+    <!-- Basic Types from the stanza by example book -->
+    <context id="types" style-ref="type">
+      <keyword>Byte</keyword>
+      <keyword>Int</keyword>
+      <keyword>Long</keyword>
+      <keyword>Float</keyword>
+      <keyword>Double</keyword>
+      <keyword>String</keyword>
+      <keyword>Char</keyword>
+      <keyword>True</keyword>
+      <keyword>False</keyword>
+      <keyword>\?</keyword>
+      <keyword>Void</keyword>
+      <keyword>Array</keyword>
+    </context>
+
+    <context id="decimal" style-ref="decimal">
+      <match extended="true">
+        (?&lt;![\w\.])
+        (0|[1-9][0-9]*)[uUlL]*
+        (?![\w\.])
+      </match>
+    </context>
+
+
+    <context id="stanza" class="no-spell-check">
+      <include>
+        <context ref="keywords"/>
+        <context ref="boolean"/>
+        <context ref="string"/>
+        <context ref="comment"/>
+        <context ref="types"/>
+        <context ref="decimal"/>
+      </include>
+    </context>
+
+  </definitions>
+
+</language>
